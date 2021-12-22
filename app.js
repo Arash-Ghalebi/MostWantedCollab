@@ -56,7 +56,17 @@ function mainMenu(person, people){
       displayPeople(family);
     break;
     case "descendants":
-    // TODO: get person's descendants
+      let child = people.filter(function(ele){
+        for (let x = 0; x< ele.parents.length; x++)
+          if (person.id == ele.parents[x]){
+            return true;
+          }
+        else{
+          return false;
+        }
+        
+      })
+      displayPeople(child);
     break;
     case "restart":
     app(people); // restart
