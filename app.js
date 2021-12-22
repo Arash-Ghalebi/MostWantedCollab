@@ -15,16 +15,40 @@ function app(people){
       searchResults = searchByName(people);
       break;
     case 'no':
-      // TODO: search by traits
+      let answer = promptFor("what trait would you like search? gender, date of birth, height, weight, eyecolor, occupation",traitswitch).toLowerCase();
+        switch(answer){
+          case 'gender':
+            searchResults = searchByGender(people);
+            break
+          case 'date of birth':
+            searchResults = SearchByDob(people);
+            break
+          case 'height':
+            searchResults = searchByHeight(people);
+            break
+          case 'weight':
+            searchResults = searchByWeight(people);
+            break
+          case "eyecolor":
+            searchResults = searchByEyeColor(people);
+            break
+          case "occupation":
+            searchResults = searchByOccupation(people);
+            break
+
+  
+        }
+      
+      
       break;
       default:
     app(people); // restart app
       break;
   }
-  
-  // Call the mainMenu function ONLY after you find the SINGLE person you are looking for
-  mainMenu(searchResults, people);
 }
+  // Call the mainMenu function ONLY after you find the SINGLE person you are looking for
+mainMenu(searchResults, people);
+
 
 // Menu function to call once you find who you are looking for
 function mainMenu(person, people){
@@ -108,7 +132,83 @@ function searchByName(people){
 
 //unfinished function to search through an array of people to find matching eye colors. Use searchByName as reference.
 function searchByEyeColor(people){
+  let eyeColor = prompt("type the color of persons eyes here")
+  let foundPerson = people.filter(function(potentialMatch){
+    if(potentialMatch.eyeColor === eyeColor){
+      return true;
+    }
+    else{
+      return false;
+    }
+  })
+  displayPeople(foundPerson)
+}
 
+function searchByGender(people){
+  let gender = prompt("type the gender of the person")
+  let foundPerson = people.filter(function(potentialMatch){
+    if(potentialMatch.gender === gender){
+      return true;
+    }
+    else{
+      return false;
+    }
+  })
+  displayPeople(foundPerson)
+}
+
+
+function SearchByDob(people){
+  let dob = prompt("type the date of birth of person MM/DD/YYYY ")
+  let foundPerson = people.filter(function(potentialMatch){
+    if(potentialMatch.dob === dob){
+      return true;
+    }
+    else{
+      return false;
+    }
+  })
+  displayPeople(foundPerson)
+}
+
+function searchByHeight(people){
+  let height = prompt("type the height of person in inches")
+  let foundPerson = people.filter(function(potentialMatch){
+    if(potentialMatch.height == height){
+      return true;
+    }
+    else{
+      return false;
+    }
+  })
+  displayPeople(foundPerson)
+}
+
+
+function searchByWeight(people){
+  let weight = prompt("type the weight of person in pounds")
+  let foundPerson = people.filter(function(potentialMatch){
+    if(potentialMatch.weight == weight){
+      return true;
+    }
+    else{
+      return false;
+    }
+  })
+  displayPeople(foundPerson)
+}
+
+function searchByOccupation(people){
+  let occupation = prompt("type the occupation of person")
+  let foundPerson = people.filter(function(potentialMatch){
+    if(potentialMatch.occupation === occupation){
+      return true;
+    }
+    else{
+      return false;
+    }
+  })
+  displayPeople(foundPerson)
 }
 
 //TODO: add other trait filter functions here.
@@ -172,6 +272,15 @@ function promptFor(question, valid){
 // helper function/callback to pass into promptFor to validate yes/no answers.
 function yesNo(input){
   if(input.toLowerCase() == "yes" || input.toLowerCase() == "no"){
+    return true;
+  }
+  else{
+    return false;
+  }
+}
+function traitswitch(input){
+  if(input.toLowerCase() == "gender" || input.toLowerCase() == "date of birth"|| input.toLowerCase() == "eyecolor" 
+  || input.toLowerCase() == "occupation"|| input.toLowerCase() == "height"|| input.toLowerCase() == "weight"){
     return true;
   }
   else{
