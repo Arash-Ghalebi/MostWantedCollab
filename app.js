@@ -77,7 +77,7 @@ function mainMenu(person, people){
             return false;
           }
       })
-      family.unshift(person);
+      // family.unshift(person);
       displayPeople(family);
     break;
     case "descendants":
