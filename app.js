@@ -53,7 +53,7 @@ function mainMenu(person, people){
             return false;
           }
       })
-      alert("Family Members: " + family.values());
+      displayPeople(family);
     break;
     case "descendants":
     // TODO: get person's descendants
