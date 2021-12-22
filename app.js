@@ -41,9 +41,19 @@ function mainMenu(person, people){
   switch(displayOption){
     case "info":
     // TODO: get person's info
+      alert("Gender: " + person.gender + " " + "DOB: " + person.dob + " " + "Height: " + person.height + " " + "Weight: " + person.weight + " " + "Eye Color: " + person.eyeColor + " " + "Occupation: " + person.occupation);
+
     break;
     case "family":
-    // TODO: get person's family
+      let family = people.filter(function(element){
+          if(person.lastName === element.lastName && person.firstName !== element.firstName){
+            return true;
+          }
+          else{
+            return false;
+          }
+      })
+      alert("Family Members: " + family.values());
     break;
     case "descendants":
     // TODO: get person's descendants
@@ -70,6 +80,7 @@ function searchByName(people){
   let firstName = promptFor("What is the person's first name?", autoValid);
   let lastName = promptFor("What is the person's last name?", autoValid);
 
+  let foundind;
   let foundPerson = people.filter(function(potentialMatch){
     if(potentialMatch.firstName === firstName && potentialMatch.lastName === lastName){
       return true;
@@ -78,8 +89,10 @@ function searchByName(people){
       return false;
     }
   })
+  foundind = foundPerson[0];
+  mainMenu(foundind, people);
   // TODO: find the person single person object using the name they entered.
-  return foundPerson;
+  //return foundPerson;
 }
 
 //unfinished function to search through an array of people to find matching eye colors. Use searchByName as reference.
