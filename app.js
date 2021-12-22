@@ -53,6 +53,7 @@ function mainMenu(person, people){
             return false;
           }
       })
+      family.unshift(person);
       displayPeople(family);
     break;
     case "descendants":
@@ -123,8 +124,17 @@ function searchByEyeColor(people){
 
 // alerts a list of people
 function displayPeople(people){
+  // let relations = new Array[people.length]
+  // relations[0] = "index";
+  // for(let y = 1; y < relations.length; y++){
+  //   if people[0].
+  // }
+  // if(people[0].id == )
   alert(people.map(function(person){
-    return person.firstName + " " + person.lastName;
+    return person.firstName + " " + person.lastName; //+ " " + relations[x]
+    // if(x < relations.length){
+    //   x++;
+    // }
   }).join("\n"));
 }
 
