@@ -45,10 +45,10 @@ function app(people){
     app(people); // restart app
       break;
   }
-  
-  // Call the mainMenu function ONLY after you find the SINGLE person you are looking for
-  mainMenu(searchResults, people);
 }
+  // Call the mainMenu function ONLY after you find the SINGLE person you are looking for
+mainMenu(searchResults, people);
+
 
 // Menu function to call once you find who you are looking for
 function mainMenu(person, people){
