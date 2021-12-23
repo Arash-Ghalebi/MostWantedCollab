@@ -7,6 +7,9 @@
 //#region 
 
 // app is the function called to start the entire application
+let globalMulti = false
+let searchResults;
+let z = true;
 function app(people){
   let searchType = promptFor("Do you know the name of the person you are looking for? Enter 'yes' or 'no'", yesNo).toLowerCase();
   let searchResults;
@@ -15,26 +18,29 @@ function app(people){
       searchResults = searchByName(people);
       break;
     case 'no':
-      let answer = promptFor("what trait would you like search? gender, date of birth, height, weight, eyecolor, occupation",traitswitch).toLowerCase();
+      let answer = promptFor("what trait would you like search? gender, date of birth, height, weight, eyecolor, occupation, or multiple",traitswitch).toLowerCase();
         switch(answer){
           case 'gender':
             searchResults = searchByGender(people);
-            break
+            break;
           case 'date of birth':
             searchResults = SearchByDob(people);
-            break
+            break;
           case 'height':
             searchResults = searchByHeight(people);
-            break
+            break;
           case 'weight':
             searchResults = searchByWeight(people);
-            break
+            break;
           case "eyecolor":
             searchResults = searchByEyeColor(people);
-            break
+            break;
           case "occupation":
             searchResults = searchByOccupation(people);
-            break
+            break;
+          case "multiple":
+            searchResults = searchMultiple(people);
+            break;
 
   
         }
@@ -45,9 +51,10 @@ function app(people){
     app(people); // restart app
       break;
   }
+  mainMenu(searchResults, people);
 }
   // Call the mainMenu function ONLY after you find the SINGLE person you are looking for
-mainMenu(searchResults, people);
+
 
 
 // Menu function to call once you find who you are looking for
@@ -111,6 +118,40 @@ function mainMenu(person, people){
 //#region 
 
 //nearly finished function used to search through an array of people to find matching first and last name and return a SINGLE person object.
+function searchMultiple(people){
+  globalMulti = true
+  while (z == true){
+    let pick = promptFor("Which traits do you want to filter by? gender, date of birth, height, weight, eyecolor, occupation, or done", autoValid);
+
+    switch(pick){
+      case 'gender':
+        searchResults = searchByGender(people);
+        break;
+      case 'date of birth':
+        searchResults = SearchByDob(people);
+        break;
+      case 'height':
+        searchResults = searchByHeight(people);
+        break;
+      case 'weight':
+        searchResults = searchByWeight(people);
+        break;
+      case "eyecolor":
+        searchResults = searchByEyeColor(people);
+        break;
+      case "occupation":
+        searchResults = searchByOccupation(people);
+        break;
+      case "done":
+        displayPeople(people)
+        z = false;
+        break;
+    }
+
+
+  }
+}
+
 function searchByName(people){
   let firstName = promptFor("What is the person's first name?", autoValid);
   let lastName = promptFor("What is the person's last name?", autoValid);
@@ -141,7 +182,12 @@ function searchByEyeColor(people){
       return false;
     }
   })
-  displayPeople(foundPerson)
+  if (globalMulti == true){
+    searchMultiple(foundPerson)
+  }
+  else{
+    displayPeople(foundPerson)
+  }
 }
 
 function searchByGender(people){
@@ -154,7 +200,12 @@ function searchByGender(people){
       return false;
     }
   })
-  displayPeople(foundPerson)
+  if (globalMulti == true){
+    searchMultiple(foundPerson)
+  }
+  else{
+    displayPeople(foundPerson)
+  }
 }
 
 
@@ -280,7 +331,7 @@ function yesNo(input){
 }
 function traitswitch(input){
   if(input.toLowerCase() == "gender" || input.toLowerCase() == "date of birth"|| input.toLowerCase() == "eyecolor" 
-  || input.toLowerCase() == "occupation"|| input.toLowerCase() == "height"|| input.toLowerCase() == "weight"){
+  || input.toLowerCase() == "occupation"|| input.toLowerCase() == "height"|| input.toLowerCase() == "weight" || input.toLowerCase() == "multiple"){
     return true;
   }
   else{
