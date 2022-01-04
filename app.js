@@ -67,7 +67,7 @@ function mainMenu(person, people){
     return app(people); // restart
   }
 
-  let displayOption = promptFor("Found " + person.firstName + " " + person.lastName + " . Do you want to know their 'info', 'family', or 'descendants'? Type the option you want or 'restart' or 'quit'", autoValid);
+  let displayOption = promptFor("Found " + person.firstName + " " + person.lastName + " . Do you want to know their 'info', 'siblings', 'spouse', 'parents' , or 'descendants'? Type the option you want or 'restart' or 'quit'", autoValid);
 
   switch(displayOption){
     case "info":
@@ -75,18 +75,49 @@ function mainMenu(person, people){
       alert("Gender: " + person.gender + " " + "DOB: " + person.dob + " " + "Height: " + person.height + " " + "Weight: " + person.weight + " " + "Eye Color: " + person.eyeColor + " " + "Occupation: " + person.occupation);
 
     break;
-    case "family":
-      let family = people.filter(function(element){
-          if(person.lastName === element.lastName && person.firstName !== element.firstName){
-            return true;
+    case "parents":
+      let parents = people.filter(function(element){
+
+          if (person.parents[0] === element.id || person.parent[1] === element.id){
+          return true;
           }
-          else{
-            return false;
+          else{ 
+          return false;
           }
       })
+
+      
       // family.unshift(person);
-      displayPeople(family);
-    break;
+      displayPeople(parents);
+      break;
+
+    case "siblings":
+
+      let siblings = people.filter(function(element){
+        if(person.parents[0] === element.parents[0] && person.firstName !== element.firstName){
+          return true;
+        }
+        else{
+          return false;
+        }
+      })
+      displayPeople(siblings);
+      break;
+
+    case "spouse":
+      let spouse = people.filter(function(element){
+        if(person.currentSpouse === element.id){
+          return true;
+        }
+        else{
+          return false;
+        }
+      })
+      displayPeople(spouse);
+      break;
+      
+
+
     case "descendants":
       let child = people.filter(function(ele){
         for (let x = 0; x< ele.parents.length; x++)
@@ -99,7 +130,7 @@ function mainMenu(person, people){
         
       })
       displayPeople(child);
-    break;
+      break;
     case "restart":
     app(people); // restart
     break;
@@ -119,33 +150,34 @@ function mainMenu(person, people){
 
 //nearly finished function used to search through an array of people to find matching first and last name and return a SINGLE person object.
 function searchMultiple(people){
+  searchResults=people
   globalMulti = true
   while (z == true){
     let pick = promptFor("Which traits do you want to filter by? gender, date of birth, height, weight, eyecolor, occupation, or done", autoValid);
 
     switch(pick){
       case 'gender':
-        searchResults = searchByGender(people);
+        searchResults = searchByGender(searchResults);
         break;
       case 'date of birth':
-        searchResults = SearchByDob(people);
+        searchResults = SearchByDob(searchResults);
         break;
       case 'height':
-        searchResults = searchByHeight(people);
+        searchResults = searchByHeight(searchResults);
         break;
       case 'weight':
-        searchResults = searchByWeight(people);
+        searchResults = searchByWeight(searchResults);
         break;
       case "eyecolor":
-        searchResults = searchByEyeColor(people);
+        searchResults = searchByEyeColor(searchResults);
         break;
       case "occupation":
-        searchResults = searchByOccupation(people);
+        searchResults = searchByOccupation(searchResults);
         break;
       case "done":
         displayPeople(people)
         z = false;
-        break;
+        return searchByName(searchResults);
     }
 
 
